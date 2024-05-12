@@ -63,7 +63,7 @@ public class view_chi_tiet_san_pham extends JPanel implements MouseListener {
         this.j = j;
 
         ArrayList<String> bangsize = chitietsanpham_BUS.select_masize_by_MASP(sanpham_DTO);
-         ArrayList<String> tensize = new ArrayList<>();
+        ArrayList<String> tensize = new ArrayList<>();
         SizeBUS sizeBUS = new SizeBUS();
         for(String i: bangsize){
             for(SizeDTO s : sizeBUS.getList()){
@@ -315,7 +315,7 @@ public class view_chi_tiet_san_pham extends JPanel implements MouseListener {
                 }
                 
                 chitietsanpham_DTO ctsp = new chitietsanpham_DTO(sanpham_DTO.getMaSP(),maSizeThem,soluong);// chi tiet san pham ma nguoi dung them vao gio hang
-                System.out.println("MASP "+sanpham_DTO.getMaSP()+" ,MASIZE "+maSizeThem+" ,soluong them vao gio hang "+soluong);
+                System.out.println("MASP "+sanpham_DTO.getMaSP()+" ,MASIZE "+ maSizeThem + " ,soluong them vao gio hang "+soluong);
                 
                 boolean flag = true;// true la chua co ton tai
                 for(SanPhamDTO spDTO: dssptt){
@@ -327,10 +327,10 @@ public class view_chi_tiet_san_pham extends JPanel implements MouseListener {
                     view_chi_tiet_san_pham.dssptt.add(sanpham_DTO);
                 
                 
-                 flag = true;// true la chua co ton tai
+                flag = true;// true la chua co ton tai
                 for(chitietsanpham_DTO ctspDTO: dsctsptt){
                     if(ctspDTO.getMASP().equals(sanpham_DTO.getMaSP()) && ctspDTO.getMASIZE().equals(maSizeThem) ) {
-                        ctspDTO.setSoluong(ctspDTO.getSoluong()+soluong);
+                        ctspDTO.setSoluong(ctspDTO.getSoluong() + soluong);
                         flag = false;//neu co tim thay san pham vua them trong chitietsan pham va size = size thi flag=false
                         //kiem tra size san pham vua them vao gio hang da co trong gio hang chua
                         //neu size cua san pham vua them da co trong gio hang thi cap nhat tai chi tiet san pham do, so luong += soluong vua them

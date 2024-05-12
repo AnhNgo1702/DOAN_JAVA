@@ -30,6 +30,12 @@ public class chitietsanpham_BUS {
 		}
 		return list_size;
 	}
+
+	public chitietsanpham_DTO search(String MASP,String MASIZE) {
+		DAO_chitietsanpham dao_chitietsanpham = new DAO_chitietsanpham();
+		return dao_chitietsanpham.search(MASP, MASIZE);
+	}
+
 	public ArrayList<chitietsanpham_DTO> getlist(){
 		return this.ds;
 	}
@@ -47,6 +53,11 @@ public class chitietsanpham_BUS {
 				ds.get(i).setSoluong( ds.get(i).getSoluong()+d.getSoluong());
 			}
 		}
+	}
+
+	public void decreaseNumber(chitietsanpham_DTO d) {
+		DAO_chitietsanpham dao_chitietsanpham = new DAO_chitietsanpham();
+		dao_chitietsanpham.decreaseNumber(d);
 	}
 	
 	

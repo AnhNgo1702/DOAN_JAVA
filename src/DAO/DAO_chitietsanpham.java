@@ -138,6 +138,20 @@ public class DAO_chitietsanpham {
 			e.printStackTrace();
 		}
 	}
+
+	public void decreaseNumber(chitietsanpham_DTO d) {
+		try {
+			mySQL.connect();
+			String sql = "update chitietsanpham set SOLUONG = SOLUONG - " + d.getSoluong() +" where MASP = '" + d.getMASP()  + "' and MASIZE = '" + d.getMASIZE() +"'";             
+					
+			mySQL.executeUpdate(sql);
+			
+			mySQL.disconnect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	// public static void main(String[] args) {
 	// 	SanPhamDTO m = new SanPhamDTO("SP8", null,null, 0, args, 0);
 	// 	DAO_chitietsanpham c = new DAO_chitietsanpham();

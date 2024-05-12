@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import BUS.ChitietHD_BUS;
+
 public class Hoadon_DAO {
     private  static ConnectDataBase mySQL  ;
     public Hoadon_DAO(){
@@ -109,8 +111,13 @@ public class Hoadon_DAO {
             ConnectDataBase();
             mySQL.connect();
             String query= "INSERT INTO `hoadon`(`SOHD`, `NGAYHD`, `MAKH`, `MANV`, `TONGTIEN`, `TIENGIAMGIA`,`THOIGIAN`) VALUES ('" + item.getMaHD() +"','"+ item.getNgayHD() +"','" +item.getMaKH() +"','" +item.getMaNV() +"','"  + (double)item.getTongTien() +"','"+ (double)item.getGiamgia()+"','"+item.getThoigian()+"');";
-            for (ChitietHD_DTO ctHD : item.getDsctHD()) 
+            for (ChitietHD_DTO ctHD : item.getDsctHD()) {
+                DAO_chitietsanpham dao_chitietsanpham = new DAO_chitietsanpham();
+                chitietsanpham_DTO ctsp = dao_chitietsanpham.search(ctHD.getMaSP(), ctHD.getMaSize());
+                ctsp.setSoluong(ctHD.getSl());
+                dao_chitietsanpham.decreaseNumber(ctsp);
                 ChitietHD_DAO.addCTHD(ctHD);
+            }
             result = mySQL.executeupdate(query);
             mySQL.disconnect();
         } catch (SQLException ex) {

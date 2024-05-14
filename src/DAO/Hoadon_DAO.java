@@ -58,10 +58,8 @@ public class Hoadon_DAO {
                     dshd.add(hd);
                 }
             }
-             System.out.println("Lay danh sach chuc nang thanh cong");
              mySQL.disconnect();
         } catch (SQLException ex) {
-            System.out.println("Lay danh sach chuc nang that bai");
         }
         
         return dshd;

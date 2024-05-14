@@ -288,10 +288,15 @@ public class ShoppingCartUI extends JPanel {
         selectAllBox.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 for (JCheckBox cb : checkBoxSPList1) {
-                    if (e.getStateChange() == ItemEvent.SELECTED )
-                        cb.setSelected(true);
-                    else
-                        cb.setSelected(false);
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        if (!cb.isSelected()) 
+                            cb.doClick();
+                    }
+                    else {
+                        if (cb.isSelected()) 
+                            cb.doClick();
+                        
+                    }
                 }
             }});
 
@@ -338,7 +343,14 @@ public class ShoppingCartUI extends JPanel {
 
                     if (dsSP2.size() > 0) {
                         String spMua = "";
-                        String maHD = "HD" + String.valueOf(Hoadon_BUS.getNumberOfRow() + 1).toString();
+                        int count = 0;
+                        for (Hoadon_DTO hoadon_DTO : Hoadon_BUS.list()) {
+                            if (hoadon_DTO.getMaHD().startsWith("HD")) {
+                                count++;
+                            }
+                        }
+                        count += 1;
+                        String maHD = "HD" + count;
                         for (SanPhamDTO sp : dsSP2) {
                             spMua += sp.getTenSP() + "\n";
                             dssptt.remove(sp);
@@ -634,6 +646,8 @@ public class ShoppingCartUI extends JPanel {
         // gbc.gridy = 0;
         panel.add(quantityValuePanel, gbc);
 
+        JCheckBox checkBox = new JCheckBox("Chọn thanh toán");
+
         JButton deleteOrderButton = new JButton("Xoá đơn hàng");
         deleteOrderButton.setBackground(new Color(10, 61, 98));
         deleteOrderButton.setForeground(new Color(255, 255, 255));
@@ -650,6 +664,7 @@ public class ShoppingCartUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Xử lý logic xoá đơn hàng
                 cartPanel.remove(panel); // Xoá panel đơn hàng khi nút "Xoá đơn hàng" được nhấn
+                checkBoxSPList1.remove(checkBox);
                 revalidate(); // Cập nhật giao diện
                 repaint();
                 int countMASPcuasp=0;
@@ -678,7 +693,8 @@ public class ShoppingCartUI extends JPanel {
         });
         panel.add(deleteOrderButton, gbc);
 
-        JCheckBox checkBox = new JCheckBox("Chọn thanh toán");
+        
+        checkBoxSPList1.add(checkBox);
         checkBox.setForeground(new Color(10, 61, 98));
         checkBox.setBackground(new Color(255, 255, 255));
         checkBox.setFocusPainted(false);
@@ -710,7 +726,6 @@ public class ShoppingCartUI extends JPanel {
 
                     checkBoxSPList.add(true);
 
-                    checkBoxSPList1.add(checkBox);
                 } else {
                     panel.setBackground(new Color(255, 255, 255)); // Khôi phục màu nền mặc định
                     checkBox.setBackground(new Color(255, 255, 255));

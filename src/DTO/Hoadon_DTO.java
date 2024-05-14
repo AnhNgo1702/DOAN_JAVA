@@ -1,7 +1,6 @@
 
 package DTO;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Hoadon_DTO {
@@ -20,16 +19,15 @@ public class Hoadon_DTO {
         this.ngayHD = ngayHD;
         this.giamgia = giamgia;
         this.tongTien = tongTien;
-        this.Thoigian = Thoigian;
-        this.dsctHD = dsctHD;
+        this.thoigian = thoigian;
     }
 
-    public ArrayList<ChitietHD_DTO> getDsctHD() {
-        return dsctHD;
+    public Hoadon_DTO(String maHD, String currentTimeStamp, int maKH, String string, int i, double totalPrice, String currentTime, ArrayList<ChitietHD_DTO> dscthd) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void setDsctHD(ArrayList<ChitietHD_DTO> dsctHD) {
-        this.dsctHD = dsctHD;
+    public String getThoigian() {
+        return thoigian;
     }
 
     public String getMaHD() {
@@ -48,7 +46,7 @@ public class Hoadon_DTO {
         return giamgia;
     }
 
-    public double getTongTien() {
+    public int getTongTien() {
         return tongTien;
     }
 
@@ -77,17 +75,11 @@ public class Hoadon_DTO {
         this.giamgia = giamgia;
     }
 
-    public void setTongTien(double tongTien) {
+    public void setTongTien(int tongTien) {
         this.tongTien = tongTien;
     }
 
-    public String getThoigian() {
-        return Thoigian;
-    }
-
-    public void setThoigian(String thoigian) {
-        Thoigian = thoigian;
-    }
     
-
+    
+    
 }

@@ -16,7 +16,10 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,7 +32,7 @@ public class chucnangHoadon extends JPanel implements MouseListener {
     private int ccao;
     private JPanel JP_listNameChucnangConCuaHoadon;
     private ArrayList<chucnangDTO> listChucnangCon;
-    private JPanel JP_contentCuaNameChucnangCon;
+    JPanel JP_contentCuaNameChucnangCon;
     private CenterContentStore centerContent;
     private int crong, heightJP_content;
 

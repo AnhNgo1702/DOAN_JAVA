@@ -248,9 +248,11 @@ public class SearchInStore extends JPanel implements MouseListener {
         JPanel btn = new JPanel();
         btn.setLayout(new FlowLayout(1));
         btn.setPreferredSize(new Dimension(80, 60));
-        reset = new JButton("RESET");
+
+        reset = new JButton("XÓA");
+
         cssBtn(reset);
-        submit = new JButton("SUBMIT");
+        submit = new JButton("TÌM");
         cssBtn(submit);
         btn.add(submit);
         btn.add(reset);
@@ -458,7 +460,6 @@ public class SearchInStore extends JPanel implements MouseListener {
                 break;
             case "SP":
                 SanPhamGUI spGUI = (SanPhamGUI) components[0];
-                System.out.println("san pham dssdf: " + data_filter);
                 spGUI.SearchSP(data_filter);
                 spGUI.repaint();
                 spGUI.validate();

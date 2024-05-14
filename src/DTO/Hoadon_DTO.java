@@ -8,11 +8,12 @@ public class Hoadon_DTO {
     private String maHD,maNV;
     private String ngayHD;
     private String Thoigian;
-    private int  giamgia, maKH;
+    private double  giamgia;
+    private int maKH;
     private double tongTien;
     private ArrayList<ChitietHD_DTO> dsctHD;
 
-    public Hoadon_DTO(String maHD, String ngayHD, int maKH, String maNV,  int giamgia, double tongTien, String Thoigian, ArrayList<ChitietHD_DTO> dsctHD) {
+    public Hoadon_DTO(String maHD, String ngayHD, int maKH, String maNV,  double giamgia, double tongTien, String Thoigian, ArrayList<ChitietHD_DTO> dsctHD) {
         this.maHD = maHD;
         this.maKH = maKH;
         this.maNV = maNV;
@@ -35,8 +36,6 @@ public class Hoadon_DTO {
         return maHD;
     }
 
-
-
     public String getMaNV() {
         return maNV;
     }
@@ -45,7 +44,7 @@ public class Hoadon_DTO {
         return ngayHD;
     }
 
-    public int getGiamgia() {
+    public double getGiamgia() {
         return giamgia;
     }
 

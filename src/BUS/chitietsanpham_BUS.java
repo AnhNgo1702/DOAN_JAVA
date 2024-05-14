@@ -24,7 +24,7 @@ public class chitietsanpham_BUS {
 	public ArrayList<String> select_masize_by_MASP(SanPhamDTO sanpham_DTO){
 		ArrayList<String> list_size = new ArrayList<String>();
 		for (chitietsanpham_DTO h : ds) {
-			if (h.getMASP().equals(sanpham_DTO.getMaSP())) {
+			if (h.getMASP().equals(sanpham_DTO.getMaSP()) && h.getSoluong()!=0) {
 				list_size.add(h.getMASIZE());
 			}
 		}

@@ -30,6 +30,8 @@ import DTO.SizeDTO;
 import DTO.chitietsanpham_DTO;
 import java.awt.Cursor;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import javax.swing.JFrame;
@@ -48,6 +50,7 @@ public class view_chi_tiet_san_pham extends JPanel implements MouseListener {
     private frame_chitietsanpham j;
     public static ArrayList<SanPhamDTO> dssptt = new ArrayList<SanPhamDTO>();
     public static ArrayList<chitietsanpham_DTO> dsctsptt = new ArrayList<chitietsanpham_DTO>();
+    private chitietsanpham_DTO ctspvuathemvaogio;
     public static String maSizeThem;
     ImageIcon h0, h1, h2;
     
@@ -245,7 +248,16 @@ public class view_chi_tiet_san_pham extends JPanel implements MouseListener {
 
         optionsize = new JComboBox<String>(tensize.toArray(new String[0]));
         optionsize.setPreferredSize(new Dimension(120, 30));
-
+        optionsize.addActionListener(new ActionListener(){
+            SanPhamDTO s= sanpham_DTO;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+               jlc2[6].setText("1");
+               jlc2[4].setText(FormatInt.format(s.getPrice())+"");
+            }
+            
+        });
         pc2[3].add(optionsize);
 
         /////////////////////////////// //////////////////////////////
@@ -316,6 +328,7 @@ public class view_chi_tiet_san_pham extends JPanel implements MouseListener {
                 
                 chitietsanpham_DTO ctsp = new chitietsanpham_DTO(sanpham_DTO.getMaSP(),maSizeThem,soluong);// chi tiet san pham ma nguoi dung them vao gio hang
                 System.out.println("MASP "+sanpham_DTO.getMaSP()+" ,MASIZE "+ maSizeThem + " ,soluong them vao gio hang "+soluong);
+                
                 
                 boolean flag = true;// true la chua co ton tai
                 for(SanPhamDTO spDTO: dssptt){
@@ -416,8 +429,8 @@ public class view_chi_tiet_san_pham extends JPanel implements MouseListener {
     }
 
     public int giam_sl() {
-        if (soluong == 0) {
-            JOptionPane.showMessageDialog(this, "Số lượng không thể bé hơn 0 ");
+        if (soluong == 1) {
+            JOptionPane.showMessageDialog(this, "Số lượng không thể bé hơn 1 ");
 
         } else {
             return --this.soluong;
@@ -432,15 +445,53 @@ public class view_chi_tiet_san_pham extends JPanel implements MouseListener {
 
         }
         if (e.getSource() == jlc2[5]) {
-            jlc2[6].setText(this.giam_sl() + "");
-           String gia = FormatInt.format(this.sanpham_DTO.getPrice() * soluong);
+             int soluong = Integer.parseInt(jlc2[6].getText());//
+             if(soluong==1)
+                 JOptionPane.showMessageDialog(this, "Số lượng không thể bé hơn 1 ");
+             else{
+                 jlc2[6].setText((soluong-1) + "");
+           String gia = FormatInt.format(this.sanpham_DTO.getPrice() * (soluong-1));
             jlc2[4].setText(gia + "");
+             }
+                
 
         }
         if (e.getSource() == jlc2[7]) {
-            jlc2[6].setText(this.tang_sl() + "");
-            String gia = FormatInt.format(this.sanpham_DTO.getPrice() * soluong);
-            jlc2[4].setText(gia+ "");
+            int soluongmaxcuasanpham=0;
+            String maSizeThem="";
+            String tensize = (String)optionsize.getSelectedItem();
+             SizeBUS sizeBUS = new SizeBUS();
+                for(SizeDTO s : sizeBUS.getList()){//duyet mang size de lay ra ma size
+                    if(s.getTENSIZE().equals(tensize)) maSizeThem=s.getMASIZE();//lay ra ma size tu ten size ma nguoi dung lua chon
+                }
+        for(chitietsanpham_DTO c : chitietsanpham_BUS.getlist()){
+            if(c.getMASP().equals(sanpham_DTO.getMaSP()) && c.getMASIZE().equals(maSizeThem))
+                soluongmaxcuasanpham=c.getSoluong();
+        }
+
+            
+            int soluonghiencotronggiohang=0;
+            for(SanPhamDTO s : dssptt ){
+                if(sanpham_DTO.getMaSP().equals(s.getMaSP())){
+                    for(chitietsanpham_DTO c : dsctsptt){
+                        if(s.getMaSP().equals(c.getMASP()) && c.getMASIZE().equals((String)optionsize.getSelectedItem()))
+                            soluonghiencotronggiohang=c.getSoluong();
+                    }
+                    break;
+                }
+            }
+           
+            int soluong = Integer.parseInt(jlc2[6].getText());//
+            if(soluongmaxcuasanpham>=(soluong+1+soluonghiencotronggiohang)){
+                jlc2[6].setText((soluong+ 1) + "");
+                String gia = FormatInt.format(this.sanpham_DTO.getPrice() * (soluong+1));
+                jlc2[4].setText(gia+ "");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Thêm sản phẩm thất bại do số lượng trong kho không đủ!");
+            }
+                
+            
         }
         if (e.getSource() == jlc1[1]) {
             Image scaledImage_be2 = h1.getImage().getScaledInstance(190, 250, Image.SCALE_SMOOTH);

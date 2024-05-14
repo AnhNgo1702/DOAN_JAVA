@@ -41,7 +41,7 @@ public class DAO_chitietsanpham {
 			mySQL.connect();
 			
 			String sql = "select MASIZE from size where MASIZE in ("
-					+ "SELECT DISTINCT MASIZE FROM chitietsanpham WHERE MASP = '"+ maSP +"' )";
+					+ "SELECT DISTINCT MASIZE FROM chitietsanpham WHERE MASP = '"+ maSP +"' AND SOLUONG !=0 )";
 			
 			ResultSet rs = mySQL.executeQuery(sql);
 			while(rs.next()) {

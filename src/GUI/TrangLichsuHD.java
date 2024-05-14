@@ -88,7 +88,7 @@ public final class TrangLichsuHD extends JPanel {
             JLabel lab3 = new JLabel((String) hd.getMaNV(), JLabel.CENTER);
             JLabel lab4 = new JLabel((String) hd.getMaHD(), JLabel.CENTER);
             JLabel lab5 = new JLabel(hd.getTongTien() + "", JLabel.CENTER);
-            JLabel lab6 = new JLabel(Integer.toString(hd.getGiamgia()), JLabel.CENTER);
+            JLabel lab6 = new JLabel(String.valueOf(hd.getGiamgia()), JLabel.CENTER);
 
             lab1.setPreferredSize(new Dimension((chieurong / 3) / 6, 30));
             lab2.setPreferredSize(new Dimension((chieurong / 3) / 6, 30));

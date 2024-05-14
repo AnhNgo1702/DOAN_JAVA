@@ -25,21 +25,23 @@ import javax.swing.JScrollPane;
  *
  * @author hp
  */
-public class chucnangHoadon extends JPanel implements MouseListener{
+public class chucnangHoadon extends JPanel implements MouseListener {
     private int ccao;
-    private  JPanel JP_listNameChucnangConCuaHoadon;
+    private JPanel JP_listNameChucnangConCuaHoadon;
     private ArrayList<chucnangDTO> listChucnangCon;
     private JPanel JP_contentCuaNameChucnangCon;
     private CenterContentStore centerContent;
     private int crong, heightJP_content;
-    public chucnangHoadon(CenterContentStore centerContent,chucnangDTO cnDTO,String maquyen) {
-        this.centerContent=centerContent;
-        ccao = (int)centerContent.pageContent.getPreferredSize().getHeight();
-        crong = (int)centerContent.pageContent.getPreferredSize().getWidth();
+
+    public chucnangHoadon(CenterContentStore centerContent, chucnangDTO cnDTO, String maquyen, String maNV) {
+        this.centerContent = centerContent;
+        ccao = (int) centerContent.pageContent.getPreferredSize().getHeight();
+        crong = (int) centerContent.pageContent.getPreferredSize().getWidth();
         listChucnangCon = new ArrayList<>();
-        
-        init(cnDTO,maquyen);
+
+        init(cnDTO, maquyen, maNV);
     }
+
     public int getCrong() {
         return crong;
     }
@@ -48,36 +50,34 @@ public class chucnangHoadon extends JPanel implements MouseListener{
         return heightJP_content;
     }
 
-    
-     private void init(chucnangDTO cnDTO,String maquyen) {
-         chitietquyenBUS ctqBUS = new chitietquyenBUS();
-               if(ctqBUS.search(new chitietquyenDTO(maquyen,"HD","Thêm"))){
-                   System.out.println("CO HAY KHONGGG");
-                   listChucnangCon.add(new chucnangDTO("NULLHD","NULLTEN"));
-               }
-                     
-        listChucnangCon.add(new chucnangDTO("HD","Hóa đơn"));
+    private void init(chucnangDTO cnDTO, String maquyen, String maNV) {
+        chitietquyenBUS ctqBUS = new chitietquyenBUS();
+        if (ctqBUS.search(new chitietquyenDTO(maquyen, "HD", "Thêm"))) {
+            System.out.println("CO HAY KHONGGG");
+            listChucnangCon.add(new chucnangDTO("NULLHD", "NULLTEN"));
+        }
+
+        listChucnangCon.add(new chucnangDTO("HD", "Hóa đơn"));
         JP_listNameChucnangConCuaHoadon = new JPanel(new FlowLayout(3));
-        for(chucnangDTO i: listChucnangCon){
+        for (chucnangDTO i : listChucnangCon) {
             JPanel btn_taikhoan = new JPanel(new BorderLayout());
             JLabel title_taikhoan;
-            if(i.getTENCHUCNANG().contains("NULL"))
+            if (i.getTENCHUCNANG().contains("NULL"))
                 title_taikhoan = new JLabel("Hóa đơn chưa thanh toán", JLabel.CENTER);
             else
-                 title_taikhoan = new JLabel("Lịch sử hóa đơn", JLabel.CENTER);
-            btn_taikhoan.setPreferredSize(new Dimension((int) title_taikhoan.getPreferredSize().getWidth() + 50, (int) title_taikhoan.getPreferredSize().getHeight() + 20));
+                title_taikhoan = new JLabel("Lịch sử hóa đơn", JLabel.CENTER);
+            btn_taikhoan.setPreferredSize(new Dimension((int) title_taikhoan.getPreferredSize().getWidth() + 50,
+                    (int) title_taikhoan.getPreferredSize().getHeight() + 20));
             btn_taikhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    
-            
-if(i.getMACHUCNANG().equals(cnDTO.getMACHUCNANG())){
+
+            if (i.getMACHUCNANG().equals(cnDTO.getMACHUCNANG())) {
                 title_taikhoan.setForeground(Cacthuoctinh_phuongthuc_chung.sky_blue);
-            btn_taikhoan.setBackground(Cacthuoctinh_phuongthuc_chung.darkness_blue);
-            btn_taikhoan.setOpaque(true);
-            }
-            else{
-                 title_taikhoan.setForeground(Cacthuoctinh_phuongthuc_chung.darkness_blue);
-            btn_taikhoan.setBackground(Cacthuoctinh_phuongthuc_chung.second_gray);
-            btn_taikhoan.setOpaque(true);
+                btn_taikhoan.setBackground(Cacthuoctinh_phuongthuc_chung.darkness_blue);
+                btn_taikhoan.setOpaque(true);
+            } else {
+                title_taikhoan.setForeground(Cacthuoctinh_phuongthuc_chung.darkness_blue);
+                btn_taikhoan.setBackground(Cacthuoctinh_phuongthuc_chung.second_gray);
+                btn_taikhoan.setOpaque(true);
             }
 
             title_taikhoan.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -87,66 +87,72 @@ if(i.getMACHUCNANG().equals(cnDTO.getMACHUCNANG())){
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     JPanel btn_clicked = (JPanel) e.getSource();
-                   chucnangDTO cn= new chucnangDTO(btn_clicked.getName());
-                   centerContent.changeCenterContent(cn, maquyen);
+                    chucnangDTO cn = new chucnangDTO(btn_clicked.getName());
+                    centerContent.changeCenterContent(cn, maquyen);
                 }
-                
+
             });
-            
-             JP_listNameChucnangConCuaHoadon.add(btn_taikhoan);
+
+            JP_listNameChucnangConCuaHoadon.add(btn_taikhoan);
         }
-        JP_listNameChucnangConCuaHoadon.setPreferredSize(new Dimension(crong,(int)JP_listNameChucnangConCuaHoadon.getPreferredSize().getHeight()));
-           JP_listNameChucnangConCuaHoadon.setBackground(Cacthuoctinh_phuongthuc_chung.light_gray);
+        JP_listNameChucnangConCuaHoadon.setPreferredSize(
+                new Dimension(crong, (int) JP_listNameChucnangConCuaHoadon.getPreferredSize().getHeight()));
+        JP_listNameChucnangConCuaHoadon.setBackground(Cacthuoctinh_phuongthuc_chung.light_gray);
         JP_listNameChucnangConCuaHoadon.setOpaque(true);
-        
-        JP_contentCuaNameChucnangCon= new JPanel();
-        //JP_contentCuaNameChucnangCon.setPreferredSize(new Dimension(crong,ccao - (int)JP_listNameChucnangConCuaTaikhoan.getPreferredSize().getHeight()));
+
+        JP_contentCuaNameChucnangCon = new JPanel();
+        // JP_contentCuaNameChucnangCon.setPreferredSize(new Dimension(crong,ccao -
+        // (int)JP_listNameChucnangConCuaTaikhoan.getPreferredSize().getHeight()));
         JP_contentCuaNameChucnangCon.setBackground(Color.WHITE);
         JP_contentCuaNameChucnangCon.setOpaque(true);
-        int heightJP_content=ccao - (int)JP_listNameChucnangConCuaHoadon.getPreferredSize().getHeight();
-        
+        int heightJP_content = ccao - (int) JP_listNameChucnangConCuaHoadon.getPreferredSize().getHeight();
+
         switch (cnDTO.getMACHUCNANG()) {
             case "NULLHD":
-                ShoppingCartUI p = new ShoppingCartUI(crong, heightJP_content, 
-                        view_chi_tiet_san_pham.dssptt,view_chi_tiet_san_pham.dsctsptt, view_chi_tiet_san_pham.soluong,view_chi_tiet_san_pham.maSizeThem);
+                ShoppingCartUI p = new ShoppingCartUI(crong, heightJP_content,
+                        view_chi_tiet_san_pham.dssptt, view_chi_tiet_san_pham.dsctsptt, view_chi_tiet_san_pham.soluong,
+                        view_chi_tiet_san_pham.maSizeThem, maNV);
                 // p.setPreferredSize(new Dimension(crong,heightJP_content));
                 JP_contentCuaNameChucnangCon.add(p);
                 break;
             case "HD":
-                TrangLichsuHD hdGUI = new TrangLichsuHD(crong,heightJP_content);
+                TrangLichsuHD hdGUI = new TrangLichsuHD(crong, heightJP_content);
                 JP_contentCuaNameChucnangCon.add(hdGUI);
                 break;
         }
-        
-        
-        setLayout(new FlowLayout(3,0,0));
+
+        setLayout(new FlowLayout(3, 0, 0));
         add(JP_listNameChucnangConCuaHoadon);
         add(JP_contentCuaNameChucnangCon);
     }
 
-
     @Override
     public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from
+                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

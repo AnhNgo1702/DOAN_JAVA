@@ -50,6 +50,7 @@ public class ShoppingCartUI extends JPanel {
     private JCheckBox applyDiscountBox;
     private boolean discountFlag = false;
     private ArrayList<Boolean> checkBoxSPList = new ArrayList<Boolean>();
+    private ArrayList<JCheckBox> checkBoxSPList1 = new ArrayList<JCheckBox>();
     private JLabel pointValueLabel;
     private int diemTL;
     // int sl=1;
@@ -286,7 +287,12 @@ public class ShoppingCartUI extends JPanel {
         selectAllBox.setBounds(crong-200, 70, 150, 40);
         selectAllBox.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
-                
+                for (JCheckBox cb : checkBoxSPList1) {
+                    if (e.getStateChange() == ItemEvent.SELECTED )
+                        cb.setSelected(true);
+                    else
+                        cb.setSelected(false);
+                }
             }});
 
         endPanel.add(selectAllBox);
@@ -703,6 +709,8 @@ public class ShoppingCartUI extends JPanel {
                     dsSP2.add(sp);
 
                     checkBoxSPList.add(true);
+
+                    checkBoxSPList1.add(checkBox);
                 } else {
                     panel.setBackground(new Color(255, 255, 255)); // Khôi phục màu nền mặc định
                     checkBox.setBackground(new Color(255, 255, 255));

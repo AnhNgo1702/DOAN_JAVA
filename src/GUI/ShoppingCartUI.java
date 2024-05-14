@@ -279,6 +279,19 @@ public class ShoppingCartUI extends JPanel {
         finalPriceLabel.setFont(new Font("Arial", Font.PLAIN, 30));
         endPanel.add(finalPriceLabel);
 
+        JCheckBox selectAllBox = new JCheckBox("Chọn tất cả");
+        selectAllBox.setForeground(new Color(10, 61, 98));
+        selectAllBox.setBackground(new Color(96, 163, 188));
+        selectAllBox.setFont(new Font("Arial", Font.PLAIN, 18));
+        selectAllBox.setBounds(crong-200, 70, 150, 40);
+        selectAllBox.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                
+            }});
+
+        endPanel.add(selectAllBox);
+
+
         // Thanh toán
         JButton payButton = new JButton("Thanh toán");
         payButton.setBounds(crong - 200, 110, 150, 50);

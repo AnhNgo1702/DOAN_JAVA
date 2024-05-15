@@ -94,10 +94,15 @@ public class chucnangTaikhoan extends JPanel implements MouseListener{
         int heightJP_content=ccao - (int)JP_listNameChucnangConCuaTaikhoan.getPreferredSize().getHeight();
         switch (cnDTO.getMACHUCNANG()) {
             case "NULLTK":
+            try {
                 ThongTinTaiKhoan tttk = new ThongTinTaiKhoan(centerContent.SS_main, crong,heightJP_content, JP_contentCuaNameChucnangCon.getBackground());
                 tttk.initThaoTac_macdinh();
 //                ThongTinTaiKhoan tttk = new ThongTinTaiKhoan(centerContent.SS_main, crong,heightJP_content, JP_contentCuaNameChucnangCon.getBackground());
                 JP_contentCuaNameChucnangCon.add(tttk);
+                
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
                 break;
             case "TK":
 //                TrangTaiKhoan tk = new TrangTaiKhoan(widthPageContent,600);

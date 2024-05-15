@@ -7,14 +7,16 @@ import DAO.DAO_chitietsanpham;
 import DTO.chitietsanpham_DTO;
 
 import DTO.SanPhamDTO;
+import java.sql.SQLException;
 
 public class chitietsanpham_BUS {
 	ArrayList<chitietsanpham_DTO> ds;
 	public chitietsanpham_BUS() {
 		newlist();
+        }
+        
 	
-		
-	}
+
 	public void newlist() {
 		DAO_chitietsanpham c = new DAO_chitietsanpham();
 		
@@ -24,18 +26,12 @@ public class chitietsanpham_BUS {
 	public ArrayList<String> select_masize_by_MASP(SanPhamDTO sanpham_DTO){
 		ArrayList<String> list_size = new ArrayList<String>();
 		for (chitietsanpham_DTO h : ds) {
-			if (h.getMASP().equals(sanpham_DTO.getMaSP()) && h.getSoluong()!=0) {
+			if (h.getMASP().equals(sanpham_DTO.getMaSP())) {
 				list_size.add(h.getMASIZE());
 			}
 		}
 		return list_size;
 	}
-
-	public chitietsanpham_DTO search(String MASP,String MASIZE) {
-		DAO_chitietsanpham dao_chitietsanpham = new DAO_chitietsanpham();
-		return dao_chitietsanpham.search(MASP, MASIZE);
-	}
-
 	public ArrayList<chitietsanpham_DTO> getlist(){
 		return this.ds;
 	}
@@ -54,12 +50,12 @@ public class chitietsanpham_BUS {
 			}
 		}
 	}
-
-	public void decreaseNumber(chitietsanpham_DTO d) {
-		DAO_chitietsanpham dao_chitietsanpham = new DAO_chitietsanpham();
-		dao_chitietsanpham.decreaseNumber(d);
-	}
 	
+        public void Restore_pro(chitietsanpham_DTO cp) throws SQLException {
+        DAO_chitietsanpham nvDAO = new DAO_chitietsanpham();
+        nvDAO.Restore_pro(cp);
+        }
+        
 	
 	public int getSoLuong(String masp, String masize) {
 		int i = 0;

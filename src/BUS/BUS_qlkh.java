@@ -89,7 +89,8 @@ public class BUS_qlkh {
 		return c.select_hanhdong_qlkh(MAQUYEN);
 	}
 	
-    public int getDiemTichLuy(String maKH) {
+
+	public int getDiemTichLuy(String maKH) {
         DAO_qlks dao_qlks = new DAO_qlks();
 		return dao_qlks.getDiemTichLuy(maKH);
     }
@@ -103,6 +104,7 @@ public class BUS_qlkh {
 		DAO_qlks dao_qlks = new DAO_qlks();
 		return dao_qlks.setDTL(maKH, dtl);
 	}
+	
 	
 	public static void main(String[] args) {
 		BUS_qlkh h = new BUS_qlkh();

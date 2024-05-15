@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -80,28 +81,28 @@ public class ShoppingCartUI extends JPanel {
         // headerPanel
         headerPanel = new JPanel();
         headerPanel.setLayout(null);
-        headerPanel.setPreferredSize(new Dimension(crong, 100));
-        headerPanel.setBackground(new Color(96, 163, 188));
+        headerPanel.setPreferredSize(new Dimension(crong, 70));
+        headerPanel.setBackground(Color.WHITE);
         add(headerPanel, BorderLayout.NORTH);
 
         JLabel CustomerCodeLabel = new JLabel("Mã KH");
-        CustomerCodeLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        CustomerCodeLabel.setFont(new Font("Arial", Font.BOLD, 20));
         // titleLabel.setPreferredSize(new Dimension(crong - 500, 10));
-        CustomerCodeLabel.setBounds(0, 0, 150, 100);
-        // titleLabel.setPreferredSize(new Dimension(200, 100));
+        CustomerCodeLabel.setBounds(0, 0, 100, 80);
+        // titleLabel.setPreferredSize(new Dimzension(200, 100));
         CustomerCodeLabel.setHorizontalAlignment(JLabel.CENTER);
         CustomerCodeLabel.setVerticalAlignment(JLabel.CENTER);
         CustomerCodeLabel.setForeground(new Color(10, 61, 98));
         headerPanel.add(CustomerCodeLabel);
 
         CustomerCodeField = new JTextField();
-        CustomerCodeField.setBounds(155, 30, 100, 40);
+        CustomerCodeField.setBounds(100, 23, 100, 30);
         CustomerCodeField.setBorder(BorderFactory.createLineBorder(new Color(10, 61, 98), 2));
         CustomerCodeField.setFont(new Font("Arial", Font.PLAIN, 25));
         headerPanel.add(CustomerCodeField);
 
         JButton findCustomerButton = new JButton("Tìm kiếm");
-        findCustomerButton.setBounds(260, 35, 100, 30);
+        findCustomerButton.setBounds(210, 23, 100, 30);
         findCustomerButton.setForeground(new Color(96, 163, 188));
         findCustomerButton.setBackground(new Color(10, 61, 98));
         findCustomerButton.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -110,18 +111,20 @@ public class ShoppingCartUI extends JPanel {
 
         JPanel pointPanel = new JPanel();
         pointPanel.setLayout(null);
-        pointPanel.setBounds(crong / 2 - 130, 20, 200, 30);
-        pointPanel.setBackground(new Color(96, 163, 188));
+        pointPanel.setBounds(crong / 2 - 130, 25, 200, 30);
+        pointPanel.setBackground(Color.WHITE);
         headerPanel.add(pointPanel);
 
         JLabel pointLabel = new JLabel("Điểm tích luỹ:");
-        pointLabel.setBounds(0, 0, 140, 30);
+        pointLabel.setBounds(0, 0, 150, 30);
+        pointLabel.setHorizontalAlignment(JLabel.CENTER);
+        pointLabel.setVerticalAlignment(JLabel.CENTER);
         pointLabel.setForeground(new Color(10, 61, 98));
-        pointLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        pointLabel.setFont(new Font("Arial", Font.BOLD, 20));
         pointPanel.add(pointLabel);
 
-        pointValueLabel = new JLabel("0");
-        pointValueLabel.setBounds(140, 0, 60, 30);
+        pointValueLabel = new JLabel("");
+        pointValueLabel.setBounds(150, 0, 60, 30);
         pointValueLabel.setForeground(new Color(10, 61, 98));
         pointValueLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         pointPanel.add(pointValueLabel);
@@ -146,7 +149,7 @@ public class ShoppingCartUI extends JPanel {
         Border cartBorder = BorderFactory.createLineBorder(new Color(10, 61, 98), 3);
         cartPanel.setBorder(cartBorder);
         JScrollPane scrollPane = new JScrollPane(cartPanel);
-        scrollPane.setPreferredSize(new Dimension(crong - 500, 500));
+        scrollPane.setPreferredSize(new Dimension(crong - 500, 700));
         // scrollPane.setBackground(new Color(10, 61, 98));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         // scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -155,8 +158,8 @@ public class ShoppingCartUI extends JPanel {
         // endPanel
         endPanel = new JPanel();
         endPanel.setLayout(null);
-        endPanel.setPreferredSize(new Dimension(200, 200));
-        endPanel.setBackground(new Color(96, 163, 188));
+        endPanel.setPreferredSize(new Dimension(200, 150));
+        endPanel.setBackground(Color.WHITE);
         add(endPanel, BorderLayout.SOUTH);
 
         JLabel discountLabel = new JLabel("Giảm giá:" + Integer.parseInt(new BigDecimal(discount).toBigInteger().toString()) + " VND");
@@ -166,10 +169,10 @@ public class ShoppingCartUI extends JPanel {
         endPanel.add(discountLabel);
 
         applyDiscountBox = new JCheckBox("Sử dụng");
-        applyDiscountBox.setBounds(crong / 2 + 110, 20, 100, 30);
+        applyDiscountBox.setBounds(crong / 2 + 110, 25, 100, 30);
         // applyDiscountBox.setPreferredSize(new Dimension(100, 50));
         // applyDiscountBox.setVerticalAlignment(JButton.TOP);
-        applyDiscountBox.setBackground(new Color(96, 163, 188));
+        applyDiscountBox.setBackground(Color.WHITE);
         applyDiscountBox.setForeground(new Color(10, 61, 98));
         applyDiscountBox.setFont(new Font("Arial", Font.PLAIN, 16));
         applyDiscountBox.setFocusPainted(false);
@@ -204,8 +207,13 @@ public class ShoppingCartUI extends JPanel {
                 applyDiscountBox.setSelected(false);
                 BUS_qlkh Bus_qlkh = new BUS_qlkh();
                 String maKH = CustomerCodeField.getText();
-                diemTL = Bus_qlkh.getDiemTichLuy(maKH);
+                if(maKH.equals("")){
+                    pointValueLabel.setText("");
+                }else{
+                    diemTL = Bus_qlkh.getDiemTichLuy(maKH);
                 pointValueLabel.setText("" + diemTL);
+                }
+                
             }
         });
         
@@ -275,16 +283,16 @@ public class ShoppingCartUI extends JPanel {
         endPanel.add(totalPriceLabel);
 
         finalPriceLabel = new JLabel("Thành tiền:" + Integer.parseInt(new BigDecimal(finalPrice).toBigInteger().toString()));
-        finalPriceLabel.setBounds(50, 110, 500, 50);
+        finalPriceLabel.setBounds(50, 95, 500, 40);
         finalPriceLabel.setForeground(new Color(10, 61, 98));
         finalPriceLabel.setFont(new Font("Arial", Font.PLAIN, 30));
         endPanel.add(finalPriceLabel);
 
         JCheckBox selectAllBox = new JCheckBox("Chọn tất cả");
         selectAllBox.setForeground(new Color(10, 61, 98));
-        selectAllBox.setBackground(new Color(96, 163, 188));
+        selectAllBox.setBackground(Color.WHITE);
         selectAllBox.setFont(new Font("Arial", Font.PLAIN, 18));
-        selectAllBox.setBounds(crong-200, 70, 150, 40);
+        selectAllBox.setBounds(crong-235, 5, 150, 40);
         selectAllBox.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 for (JCheckBox cb : checkBoxSPList1) {
@@ -305,7 +313,7 @@ public class ShoppingCartUI extends JPanel {
 
         // Thanh toán
         JButton payButton = new JButton("Thanh toán");
-        payButton.setBounds(crong - 200, 110, 150, 50);
+        payButton.setBounds(crong - 240, 85, 150, 50);
         payButton.setForeground(new Color(96, 163, 188));
         payButton.setBackground(new Color(10, 61, 98));
         payButton.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -367,6 +375,7 @@ public class ShoppingCartUI extends JPanel {
                         JOptionPane.showMessageDialog(null,
                                 "Bạn đã thanh toán thành công cho các đơn hàng: \n" + spMua + "Tổng tiền: " +
                                         new BigDecimal(totalPrice - discount).toBigInteger().toString() + "VND");
+                        selectAllBox.setSelected(false);
                         dsSP2.clear();
                         CustomerCodeField.setText("");
                         pointValueLabel.setText("0");
@@ -437,7 +446,7 @@ public class ShoppingCartUI extends JPanel {
     }
 
     private void payment(String maHD, ArrayList<ChitietHD_DTO> dscthd, int maKH, String maNV) {
-        Hoadon_DTO hoaDon = new Hoadon_DTO(maHD, getCurrentTimeStamp(),getCurrentTime(), maKH, maNV, discount, finalPrice, dscthd);
+        Hoadon_DTO hoaDon = new Hoadon_DTO(maHD, getCurrentTimeStamp(), getCurrentTime(), maKH, maNV, discount, finalPrice, dscthd);
         if (Hoadon_BUS.addHoaDon(hoaDon)) {
             BUS_qlkh bus_qlkh = new BUS_qlkh();
             if (discountFlag) {
@@ -522,12 +531,11 @@ public class ShoppingCartUI extends JPanel {
         panel.add(priceLabel, gbc);
 
         JLabel imageLabel = new JLabel();
-        imageLabel.setPreferredSize(new Dimension(140, 200));
+        imageLabel.setPreferredSize(new Dimension(230, 250));
         ImageIcon imageIcon = new ImageIcon("./src/images/" + sp.getTenHinh()[0]);
-        Image image = imageIcon.getImage().getScaledInstance(140, 200, Image.SCALE_SMOOTH);
+        Image image = imageIcon.getImage().getScaledInstance(230, 250, Image.SCALE_SMOOTH);
         imageLabel.setIcon(new ImageIcon(image));
         imageLabel.setForeground(new Color(10, 61, 98));
-        imageLabel.setBorder(BorderFactory.createLineBorder(new Color(10, 61, 98), 2));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 1;

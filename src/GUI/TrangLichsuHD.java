@@ -132,7 +132,7 @@ public final class TrangLichsuHD extends JPanel {
                     }
                     try {
                         ChitietHD_GUI s = new ChitietHD_GUI(chieurong, chieucao, LCont.get(3), LCont.get(0),
-                                LCont.get(1), LCont.get(2), LCont.get(4), LCont.get(5));
+                                LCont.get(6), LCont.get(1 ), LCont.get(2), LCont.get(5), LCont.get(7));
                         right.add(s);
                         right.revalidate();
                         right.repaint();

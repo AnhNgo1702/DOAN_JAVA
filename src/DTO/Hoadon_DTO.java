@@ -1,27 +1,30 @@
 
 package DTO;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Hoadon_DTO {
     private String maHD,maNV;
     private String ngayHD;
-    private String Thoigian;
+    private String thoigian;
     private double  giamgia;
     private int maKH;
     private double tongTien;
     private ArrayList<ChitietHD_DTO> dsctHD;
 
-    public Hoadon_DTO(String maHD, String ngayHD, int maKH, String maNV,  double giamgia, double tongTien, String Thoigian, ArrayList<ChitietHD_DTO> dsctHD) {
+    public Hoadon_DTO(String maHD, String ngayHD, int maKH, String maNV,  double giamgia, double tongTien, String thoigian, ArrayList<ChitietHD_DTO> dsctHD) {
         this.maHD = maHD;
         this.maKH = maKH;
         this.maNV = maNV;
         this.ngayHD = ngayHD;
         this.giamgia = giamgia;
         this.tongTien = tongTien;
-        this.Thoigian = Thoigian;
+        this.thoigian = thoigian;
         this.dsctHD = dsctHD;
+    }
+
+    public Hoadon_DTO(String maHD, String currentTimeStamp, int maKH, String string, int i, double totalPrice, String currentTime, ArrayList<ChitietHD_DTO> dscthd) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public ArrayList<ChitietHD_DTO> getDsctHD() {
@@ -30,6 +33,10 @@ public class Hoadon_DTO {
 
     public void setDsctHD(ArrayList<ChitietHD_DTO> dsctHD) {
         this.dsctHD = dsctHD;
+    }
+
+    public String getThoigian() {
+        return thoigian;
     }
 
     public String getMaHD() {
@@ -77,17 +84,11 @@ public class Hoadon_DTO {
         this.giamgia = giamgia;
     }
 
-    public void setTongTien(double tongTien) {
+    public void setTongTien(int tongTien) {
         this.tongTien = tongTien;
     }
 
-    public String getThoigian() {
-        return Thoigian;
-    }
-
-    public void setThoigian(String thoigian) {
-        Thoigian = thoigian;
-    }
     
-
+    
+    
 }

@@ -35,14 +35,6 @@ public class Hoadon_DTO {
     }
 
 
-    public void setDsctHD(ArrayList<ChitietHD_DTO> dsctHD) {
-        this.dsctHD = dsctHD;
-    }
-
-    public void setDsctHD(ArrayList<ChitietHD_DTO> dsctHD) {
-        this.dsctHD = dsctHD;
-    }
-
     public String getMaHD() {
         return maHD;
     }

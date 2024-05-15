@@ -12,7 +12,9 @@ import DTO.model_qlkh;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,9 +54,9 @@ public class Hoadon_DAO {
                     String maNV = rs.getString("MANV");
                     int giamgia = rs.getInt("TIENGIAMGIA");
                     int tongtien = rs.getInt("TONGTIEN");
-                    String Thoigian = rs.getTimestamp("THOIGIAN").toString();
+                    String Thoigian =new SimpleDateFormat("HH:mm:ss").format(rs.getTime("THOIGIAN")).toString();
                     
-                    Hoadon_DTO hd = new Hoadon_DTO(maHD, ngayHD, maKH, maNV, giamgia, tongtien, Thoigian, ChitietHD_DAO.list(maHD));
+                    Hoadon_DTO hd = new Hoadon_DTO(maHD, ngayHD, Thoigian, maKH, maNV, giamgia, tongtien, ChitietHD_DAO.list(maHD));
                     dshd.add(hd);
                 }
             }

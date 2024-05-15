@@ -77,7 +77,7 @@ public final class TrangLichsuHD extends JPanel {
                              }
             left.add(titlePanel);       
         lshd = new Hoadon_BUS();
-            for (Hoadon_DTO hd : lshd.dshoadon) {
+            for (Hoadon_DTO hd : lshd.list()) {
                addHD_gui(this,hd);
             }
     }
@@ -92,7 +92,7 @@ public final class TrangLichsuHD extends JPanel {
                     JLabel lab2 = new JLabel(Integer.toString(hd.getMaKH()), JLabel.CENTER);
                     JLabel lab3 = new JLabel((String) hd.getMaNV(), JLabel.CENTER);
                     JLabel lab4 = new JLabel((String) hd.getMaHD(), JLabel.CENTER);
-                    JLabel lab5 = new JLabel(Integer.toString(hd.getTongTien()) , JLabel.CENTER);
+                    JLabel lab5 = new JLabel(hd.getTongTien()+"" , JLabel.CENTER);
                     JLabel lab6 = new JLabel(String.valueOf(hd.getGiamgia()) , JLabel.CENTER);
                     JLabel lab7 = new JLabel((String) hd.getThoigian(), JLabel.CENTER);
                     lab1.setPreferredSize(new Dimension(((chieurong)*2/5)/7, 30));

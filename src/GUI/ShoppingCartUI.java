@@ -437,8 +437,7 @@ public class ShoppingCartUI extends JPanel {
     }
 
     private void payment(String maHD, ArrayList<ChitietHD_DTO> dscthd, int maKH, String maNV) {
-        Hoadon_DTO hoaDon = new Hoadon_DTO(maHD, getCurrentTimeStamp(), maKH, maNV, discount, finalPrice, getCurrentTime(),
-                dscthd);
+        Hoadon_DTO hoaDon = new Hoadon_DTO(maHD, getCurrentTimeStamp(),getCurrentTime(), maKH, maNV, discount, finalPrice, dscthd);
         if (Hoadon_BUS.addHoaDon(hoaDon)) {
             BUS_qlkh bus_qlkh = new BUS_qlkh();
             if (discountFlag) {

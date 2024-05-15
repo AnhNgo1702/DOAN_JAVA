@@ -16,6 +16,8 @@ import BUS.Hoadon_BUS;
 import BUS.SanPhamBUS;
 import BUS.chitietphieunhap_BUS;
 import BUS.chitietsanpham_BUS;
+import BUS.chitietphieunhap_BUS;
+import BUS.chitietsanpham_BUS;
 import DAO.DAO_chitietsanpham;
 import DTO.ChitietHD_DTO;
 import DTO.Hoadon_DTO;
@@ -45,7 +47,15 @@ public class ShoppingCartUI extends JPanel {
     public static ArrayList<chitietsanpham_DTO> dsctsptt = new ArrayList<chitietsanpham_DTO>();
     private ArrayList<ChitietHD_DTO> dscthd = new ArrayList<ChitietHD_DTO>();
     private double totalPrice = 0, discount = 0, finalPrice = 0;
+    private double totalPrice = 0, discount = 0, finalPrice = 0;
     private JLabel totalPriceLabel, titleLabel, finalPriceLabel;
+    private JTextField CustomerCodeField;
+    private JCheckBox applyDiscountBox;
+    private boolean discountFlag = false;
+    private ArrayList<Boolean> checkBoxSPList = new ArrayList<Boolean>();
+    private ArrayList<JCheckBox> checkBoxSPList1 = new ArrayList<JCheckBox>();
+    private JLabel pointValueLabel;
+    private int diemTL;
     private JTextField CustomerCodeField;
     private JCheckBox applyDiscountBox;
     private boolean discountFlag = false;
@@ -55,6 +65,8 @@ public class ShoppingCartUI extends JPanel {
     private int diemTL;
     // int sl=1;
 
+    public ShoppingCartUI(int crong, int ccao, ArrayList<SanPhamDTO> dssptt, ArrayList<chitietsanpham_DTO> dsctsptt,
+            int soluong, String maSize, String maNV) {
     public ShoppingCartUI(int crong, int ccao, ArrayList<SanPhamDTO> dssptt, ArrayList<chitietsanpham_DTO> dsctsptt,
             int soluong, String maSize, String maNV) {
         // this.chucnang = chucnang;
@@ -72,6 +84,14 @@ public class ShoppingCartUI extends JPanel {
         for (chitietsanpham_DTO ctsp : dsctsptt) {
             System.out.println(
                     "1. MASP " + ctsp.getMASP() + ", MASIZE " + ctsp.getMASIZE() + ", So luong: " + ctsp.getSoluong());
+        this.dsctsptt = dsctsptt;
+        for (SanPhamDTO s : dsSP) {
+            System.out.println(
+                    "1. MASP " + s.getMaSP()+ ", Ten san pham: " + s.getTenSP());
+        }
+        for (chitietsanpham_DTO ctsp : dsctsptt) {
+            System.out.println(
+                    "1. MASP " + ctsp.getMASP() + ", MASIZE " + ctsp.getMASIZE() + ", So luong: " + ctsp.getSoluong());
         }
         setPreferredSize(new Dimension(crong, ccao));
         setBackground(new Color(255, 255, 255));
@@ -80,15 +100,15 @@ public class ShoppingCartUI extends JPanel {
         // headerPanel
         headerPanel = new JPanel();
         headerPanel.setLayout(null);
-        headerPanel.setPreferredSize(new Dimension(crong, 100));
-        headerPanel.setBackground(new Color(96, 163, 188));
+        headerPanel.setPreferredSize(new Dimension(crong, 70));
+        headerPanel.setBackground(Color.WHITE);
         add(headerPanel, BorderLayout.NORTH);
 
         JLabel CustomerCodeLabel = new JLabel("Mã KH");
-        CustomerCodeLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        CustomerCodeLabel.setFont(new Font("Arial", Font.BOLD, 20));
         // titleLabel.setPreferredSize(new Dimension(crong - 500, 10));
-        CustomerCodeLabel.setBounds(0, 0, 150, 100);
-        // titleLabel.setPreferredSize(new Dimension(200, 100));
+        CustomerCodeLabel.setBounds(0, 0, 100, 80);
+        // titleLabel.setPreferredSize(new Dimzension(200, 100));
         CustomerCodeLabel.setHorizontalAlignment(JLabel.CENTER);
         CustomerCodeLabel.setVerticalAlignment(JLabel.CENTER);
         CustomerCodeLabel.setForeground(new Color(10, 61, 98));
@@ -101,7 +121,7 @@ public class ShoppingCartUI extends JPanel {
         headerPanel.add(CustomerCodeField);
 
         JButton findCustomerButton = new JButton("Tìm kiếm");
-        findCustomerButton.setBounds(260, 35, 100, 30);
+        findCustomerButton.setBounds(210, 23, 100, 30);
         findCustomerButton.setForeground(new Color(96, 163, 188));
         findCustomerButton.setBackground(new Color(10, 61, 98));
         findCustomerButton.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -114,10 +134,13 @@ public class ShoppingCartUI extends JPanel {
         pointPanel.setBackground(new Color(96, 163, 188));
         headerPanel.add(pointPanel);
 
+
         JLabel pointLabel = new JLabel("Điểm tích luỹ:");
-        pointLabel.setBounds(0, 0, 140, 30);
+        pointLabel.setBounds(0, 0, 150, 30);
+        pointLabel.setHorizontalAlignment(JLabel.CENTER);
+        pointLabel.setVerticalAlignment(JLabel.CENTER);
         pointLabel.setForeground(new Color(10, 61, 98));
-        pointLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        pointLabel.setFont(new Font("Arial", Font.BOLD, 20));
         pointPanel.add(pointLabel);
 
         pointValueLabel = new JLabel("0");
@@ -146,7 +169,7 @@ public class ShoppingCartUI extends JPanel {
         Border cartBorder = BorderFactory.createLineBorder(new Color(10, 61, 98), 3);
         cartPanel.setBorder(cartBorder);
         JScrollPane scrollPane = new JScrollPane(cartPanel);
-        scrollPane.setPreferredSize(new Dimension(crong - 500, 500));
+        scrollPane.setPreferredSize(new Dimension(crong - 500, 700));
         // scrollPane.setBackground(new Color(10, 61, 98));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         // scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -155,10 +178,12 @@ public class ShoppingCartUI extends JPanel {
         // endPanel
         endPanel = new JPanel();
         endPanel.setLayout(null);
-        endPanel.setPreferredSize(new Dimension(200, 200));
-        endPanel.setBackground(new Color(96, 163, 188));
+        endPanel.setPreferredSize(new Dimension(200, 150));
+        endPanel.setBackground(Color.WHITE);
         add(endPanel, BorderLayout.SOUTH);
 
+        JLabel discountLabel = new JLabel("Giảm giá:" + Integer.parseInt(new BigDecimal(discount).toBigInteger().toString()) + " VND");
+        discountLabel.setBounds(50, 60, 300, 30);
         JLabel discountLabel = new JLabel("Giảm giá:" + Integer.parseInt(new BigDecimal(discount).toBigInteger().toString()) + " VND");
         discountLabel.setBounds(50, 60, 300, 30);
         discountLabel.setForeground(new Color(10, 61, 98));
@@ -169,7 +194,7 @@ public class ShoppingCartUI extends JPanel {
         applyDiscountBox.setBounds(crong / 2 + 110, 20, 100, 30);
         // applyDiscountBox.setPreferredSize(new Dimension(100, 50));
         // applyDiscountBox.setVerticalAlignment(JButton.TOP);
-        applyDiscountBox.setBackground(new Color(96, 163, 188));
+        applyDiscountBox.setBackground(Color.WHITE);
         applyDiscountBox.setForeground(new Color(10, 61, 98));
         applyDiscountBox.setFont(new Font("Arial", Font.PLAIN, 16));
         applyDiscountBox.setFocusPainted(false);
@@ -187,6 +212,14 @@ public class ShoppingCartUI extends JPanel {
                     discount = diemTL * 1000;
                     checkBoxForSP();
                 } else {
+                    discountFlag = false;
+                    checkBoxForSP();
+                    diemTL = 0;
+                    discount = 0;
+                }
+                System.out.println(discountFlag);
+                discountLabel.setText("Giảm giá: " + Integer.parseInt(new BigDecimal(discount).toBigInteger().toString()) + " VND");
+                finalPriceLabel.setText("Thành tiền: " + Integer.parseInt(new BigDecimal(finalPrice).toBigInteger().toString()) + " VND");
                     discountFlag = false;
                     checkBoxForSP();
                     diemTL = 0;
@@ -237,10 +270,13 @@ public class ShoppingCartUI extends JPanel {
         // discountCodeField.setBounds(200, 20, 150, 30);
         // discountCodeField.setBorder(BorderFactory.createLineBorder(new Color(10, 61,
         // 98), 2));
+        // discountCodeField.setBorder(BorderFactory.createLineBorder(new Color(10, 61,
+        // 98), 2));
         // discountCodeField.setFont(new Font("Arial", Font.PLAIN, 20));
         // endPanel.add(discountCodeField);
 
         JTextField PointField = new JTextField();
+        PointField.setBounds(crong / 2, 20, 100, 30);
         PointField.setBounds(crong / 2, 20, 100, 30);
         PointField.setBorder(BorderFactory.createLineBorder(new Color(10, 61, 98), 2));
         PointField.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -262,12 +298,19 @@ public class ShoppingCartUI extends JPanel {
         // public void actionPerformed(ActionEvent e) {
         // String discountCode = discountCodeField.getText();
         // // Thực hiện kiểm tra mã giảm giá và áp dụng
+        // @Override
+        // public void actionPerformed(ActionEvent e) {
+        // String discountCode = discountCodeField.getText();
+        // // Thực hiện kiểm tra mã giảm giá và áp dụng
 
+        // // Cập nhật tổng tiền và hiển thị lại
+        // }
         // // Cập nhật tổng tiền và hiển thị lại
         // }
         // });
 
         // Tổng tiền
+        totalPriceLabel = new JLabel("Tổng tiền:" + Integer.parseInt(new BigDecimal(totalPrice).toBigInteger().toString()) + " VND");
         totalPriceLabel = new JLabel("Tổng tiền:" + Integer.parseInt(new BigDecimal(totalPrice).toBigInteger().toString()) + " VND");
         totalPriceLabel.setBounds(50, 10, 500, 50);
         totalPriceLabel.setForeground(new Color(10, 61, 98));
@@ -315,6 +358,7 @@ public class ShoppingCartUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Xử lý khi nút thanh toán được nhấn
                 // StringBuilder selectedOrders = new StringBuilder();
+                // totalPrice = 0; // Reset tổng tiền trước khi tính toán lại
                 // totalPrice = 0; // Reset tổng tiền trước khi tính toán lại
                 // Component[] components = cartPanel.getComponents();
                 // for (Component component : components) {
@@ -406,6 +450,7 @@ public class ShoppingCartUI extends JPanel {
         return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     }
 
+
     private String getCurrentTime() {
         return new SimpleDateFormat("HH:mm:ss").format(new Date());
     }
@@ -445,7 +490,44 @@ public class ShoppingCartUI extends JPanel {
                 bus_qlkh.setDTL(maKH, 0);
             } else
                 bus_qlkh.increaseDTL(maKH, (int) finalPrice / 10000);
+    private void checkBoxForSP() {
+        boolean checkBoxSPFlag = false;
+        boolean isDecreased = false;
+        for (boolean isSPChecked : checkBoxSPList) {
+            if (isSPChecked) {
+                checkBoxSPFlag = true;
+                break;
+            }
+            checkBoxSPFlag = false;
+        }
+        if (checkBoxSPFlag && discountFlag) {
+            if (finalPrice - discount < 0) {
+                JOptionPane.showMessageDialog(this, "Tổng số tiền thanh toán phải lớn hơn số tiền giảm giá", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                applyDiscountBox.setSelected(false);
+                discount = 0;
+                return;
+            } else
+                finalPrice -= discount;
+                isDecreased = true;
+        }
+        else if (checkBoxSPFlag && !discountFlag && isDecreased)
+            finalPrice += discount;
+        else
+            finalPrice = totalPrice;  
+    }
+
+    private void payment(String maHD, ArrayList<ChitietHD_DTO> dscthd, int maKH, String maNV) {
+        Hoadon_DTO hoaDon = new Hoadon_DTO(maHD, getCurrentTimeStamp(), maKH, maNV, discount, finalPrice, getCurrentTime(),
+                dscthd);
+        if (Hoadon_BUS.addHoaDon(hoaDon)) {
+            BUS_qlkh bus_qlkh = new BUS_qlkh();
+            if (discountFlag) {
+                bus_qlkh.setDTL(maKH, 0);
+            } else
+                bus_qlkh.increaseDTL(maKH, (int) finalPrice / 10000);
             JOptionPane.showMessageDialog(this, "Thêm hóa đơn thành công");
+
+        }
 
         }
         else
@@ -459,7 +541,15 @@ public class ShoppingCartUI extends JPanel {
             for (int j = 0; j < dssptt.size(); j++) {
                 if(dsctsptt.get(i).getMASP().equals(dssptt.get(j).getMaSP()))
                     addOrderToCart(createOrderPanel(dssptt.get(j),dsctsptt.get(i).getMASIZE(),dsctsptt.get(i).getSoluong()));
+        for (int i = 0; i < dsctsptt.size(); i++) {
+            for (int j = 0; j < dssptt.size(); j++) {
+                if(dsctsptt.get(i).getMASP().equals(dssptt.get(j).getMaSP()))
+                    addOrderToCart(createOrderPanel(dssptt.get(j),dsctsptt.get(i).getMASIZE(),dsctsptt.get(i).getSoluong()));
         }
+        }
+//        for (int i = 0; i < dssptt.size(); i++) {
+//            addOrderToCart(createOrderPanel(dssptt.get(i)));
+//        }
         }
 //        for (int i = 0; i < dssptt.size(); i++) {
 //            addOrderToCart(createOrderPanel(dssptt.get(i)));
@@ -468,6 +558,7 @@ public class ShoppingCartUI extends JPanel {
         repaint();
     }
 
+    private JPanel createOrderPanel(SanPhamDTO sp,String masizeluachon, int slluachon) {
     private JPanel createOrderPanel(SanPhamDTO sp,String masizeluachon, int slluachon) {
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -523,12 +614,11 @@ public class ShoppingCartUI extends JPanel {
         panel.add(priceLabel, gbc);
 
         JLabel imageLabel = new JLabel();
-        imageLabel.setPreferredSize(new Dimension(140, 200));
+        imageLabel.setPreferredSize(new Dimension(230, 250));
         ImageIcon imageIcon = new ImageIcon("./src/images/" + sp.getTenHinh()[0]);
-        Image image = imageIcon.getImage().getScaledInstance(140, 200, Image.SCALE_SMOOTH);
+        Image image = imageIcon.getImage().getScaledInstance(230, 250, Image.SCALE_SMOOTH);
         imageLabel.setIcon(new ImageIcon(image));
         imageLabel.setForeground(new Color(10, 61, 98));
-        imageLabel.setBorder(BorderFactory.createLineBorder(new Color(10, 61, 98), 2));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
@@ -547,14 +637,29 @@ public class ShoppingCartUI extends JPanel {
         panel.add(quantityLabel, gbc);
 
         chitietsanpham_BUS ctsp_bus = new chitietsanpham_BUS();
+        JLabel quantityLabel = new JLabel("Số lượng hiện có: ", JLabel.LEFT); // Giả sử số lượng ban đầu là 1
+        quantityLabel.setForeground(new Color(10, 61, 98));
+        // quantityLabel.setBackground(new Color(255, 255, 255));
+        quantityLabel.setFont(new Font("Arial", Font.BOLD, 13));
+        // quantityLabel.setBounds(0, 0, 150, 30);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.gridheight = 1;
+        panel.add(quantityLabel, gbc);
+
+        chitietsanpham_BUS ctsp_bus = new chitietsanpham_BUS();
         ArrayList<String> list = DAO_chitietsanpham.select_size(sp.getMaSP());
         String[] items = list.toArray(new String[list.size()]);
         JComboBox sizeComboBox = new JComboBox(items);
+        sizeComboBox.setSelectedItem(masizeluachon);
         sizeComboBox.setSelectedItem(masizeluachon);
         sizeComboBox.setForeground(new Color(10, 61, 98));
         // quantityLabel.setBackground(new Color(255, 255, 255));
         sizeComboBox.setPreferredSize(new Dimension(80, 30));
         sizeComboBox.setFont(new Font("Arial", Font.BOLD, 13));
+        
+        quantityLabel.setText(
+                "Số lượng hiện có: " + ctsp_bus.getSoLuong(sp.getMaSP(), masizeluachon));
         
         quantityLabel.setText(
                 "Số lượng hiện có: " + ctsp_bus.getSoLuong(sp.getMaSP(), masizeluachon));
@@ -577,14 +682,31 @@ public class ShoppingCartUI extends JPanel {
                 quantityValueLabel.setText("1");
             }
         });
+        
+        JLabel quantityValueLabel = new JLabel(slluachon+"", JLabel.CENTER); // Giả sử số lượng ban đầu là 1
+        sizeComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                //
+                // Get the source of the component, which is our combo
+                // box.
+                //
+                JComboBox comboBox = (JComboBox) event.getSource();
+
+                Object selected = comboBox.getSelectedItem();
+                quantityLabel.setText("Số lượng hiện có: " + ctsp_bus.getSoLuong(sp.getMaSP(), selected.toString()));
+                quantityValueLabel.setText("1");
+            }
+        });
         panel.add(sizeComboBox, gbc);
 
         JPanel quantityValuePanel = new JPanel();
         quantityValuePanel.setLayout(null);
         quantityValuePanel.setPreferredSize(new Dimension(150, 30)); // Đặt kích thước cho panel số lượng
         gbc.gridx = 7;
+        gbc.gridx = 7;
         gbc.gridy = 4;
 
+        
         
         quantityValueLabel.setForeground(new Color(10, 61, 98));
         quantityValueLabel.setBackground(new Color(255, 255, 255));
@@ -639,6 +761,10 @@ public class ShoppingCartUI extends JPanel {
                 String[] str = sb.split(":");
                 if (currentQuantity < Integer.parseInt(str[1].trim()))
                     currentQuantity++;
+                String sb = new String(quantityLabel.getText());
+                String[] str = sb.split(":");
+                if (currentQuantity < Integer.parseInt(str[1].trim()))
+                    currentQuantity++;
                 quantityValueLabel.setText(currentQuantity + "");
             }
         });
@@ -648,10 +774,13 @@ public class ShoppingCartUI extends JPanel {
 
         JCheckBox checkBox = new JCheckBox("Chọn thanh toán");
 
+        JCheckBox checkBox = new JCheckBox("Chọn thanh toán");
+
         JButton deleteOrderButton = new JButton("Xoá đơn hàng");
         deleteOrderButton.setBackground(new Color(10, 61, 98));
         deleteOrderButton.setForeground(new Color(255, 255, 255));
         deleteOrderButton.setFocusPainted(false);
+        gbc.gridx = 8;
         gbc.gridx = 8;
         gbc.gridy = 2;
         gbc.gridwidth = 2; // Số cột mà nút xoá chiếm
@@ -665,8 +794,31 @@ public class ShoppingCartUI extends JPanel {
                 // Xử lý logic xoá đơn hàng
                 cartPanel.remove(panel); // Xoá panel đơn hàng khi nút "Xoá đơn hàng" được nhấn
                 checkBoxSPList1.remove(checkBox);
+                checkBoxSPList1.remove(checkBox);
                 revalidate(); // Cập nhật giao diện
                 repaint();
+                int countMASPcuasp=0;
+                for(chitietsanpham_DTO c : dsctsptt){
+                    if(c.getMASP().equals(sp.getMaSP())){ 
+                        if(c.getMASIZE().equals(masizeluachon)){
+                            dsctsptt.remove(c);
+                            view_chi_tiet_san_pham.dsctsptt.remove(c);
+                        }
+                            
+                        countMASPcuasp++;
+                    }
+                }
+                if(countMASPcuasp==1){
+                    for(SanPhamDTO s: dsSP){
+                        if(s.getMaSP().equals(sp.getMaSP())){
+                            dsSP.remove(s);
+                            view_chi_tiet_san_pham.dssptt.remove(s);
+                            
+                        }
+                            
+                    }
+                }
+                
                 int countMASPcuasp=0;
                 for(chitietsanpham_DTO c : dsctsptt){
                     if(c.getMASP().equals(sp.getMaSP())){ 
@@ -695,6 +847,8 @@ public class ShoppingCartUI extends JPanel {
 
         
         checkBoxSPList1.add(checkBox);
+        
+        checkBoxSPList1.add(checkBox);
         checkBox.setForeground(new Color(10, 61, 98));
         checkBox.setBackground(new Color(255, 255, 255));
         checkBox.setFocusPainted(false);
@@ -715,6 +869,7 @@ public class ShoppingCartUI extends JPanel {
                     deleteOrderButton.setEnabled(false);
                     sizeComboBox.setEnabled(false);
                     // xét đoạn này
+                    // xét đoạn này
                     BigDecimal bd = new BigDecimal(sp.getPrice());
                     int gia = Integer.parseInt(bd.toBigInteger().toString());
                     int sl = Integer.parseInt(quantityValueLabel.getText());
@@ -723,6 +878,9 @@ public class ShoppingCartUI extends JPanel {
                     chitietsanpham_DTO ctsp = new chitietsanpham_DTO(sp.getMaSP(), size, sl);
                     dsctsp.add(ctsp);
                     dsSP2.add(sp);
+
+                    checkBoxSPList.add(true);
+
 
                     checkBoxSPList.add(true);
 
@@ -748,6 +906,16 @@ public class ShoppingCartUI extends JPanel {
                                 }
                     }
                     dsSP2.remove(sp);
+
+                    int sl1 = checkBoxSPList.size() - 1;
+                    if (sl1 >= 0)
+                        checkBoxSPList.remove(sl1);
+                }
+                
+                finalPrice = totalPrice;
+                checkBoxForSP();
+                totalPriceLabel.setText("Tổng tiền: " + Integer.parseInt(new BigDecimal(totalPrice).toBigInteger().toString()) + " VND");
+                finalPriceLabel.setText("Thành tiền: " + Integer.parseInt(new BigDecimal(finalPrice).toBigInteger().toString()) + " VND");
 
                     int sl1 = checkBoxSPList.size() - 1;
                     if (sl1 >= 0)

@@ -15,7 +15,8 @@ import DTO.SanPhamDTO;
 public class DAO_chitietsanpham {
 	private static ConnectDataBase mySQL;
 	private SanPhamDTO sanpham_DTO;
-	public DAO_chitietsanpham() {	
+	public DAO_chitietsanpham() {
+		
 		try {
 			mySQL = new ConnectDataBase();
 		} catch (SQLException e) {
@@ -23,7 +24,7 @@ public class DAO_chitietsanpham {
 			e.printStackTrace();
 		}
 	}
-        
+
 	private static void ConnectDataBase() {
         try {
             mySQL = new ConnectDataBase();
@@ -32,6 +33,7 @@ public class DAO_chitietsanpham {
         }
     }
 
+	
 	public static ArrayList<String> select_size(String maSP){
 		ArrayList<String> k = new ArrayList<String>();
 		try {
@@ -127,6 +129,20 @@ public class DAO_chitietsanpham {
 		try {
 			mySQL.connect();
 			String sql = "update chitietsanpham set SOLUONG = SOLUONG + " + d.getSoluong() +" where MASP = '" + d.getMASP()  + "' and MASIZE = '" + d.getMASIZE() +"'";             
+					
+			mySQL.executeUpdate(sql);
+			
+			mySQL.disconnect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void decreaseNumber(chitietsanpham_DTO d) {
+		try {
+			mySQL.connect();
+			String sql = "update chitietsanpham set SOLUONG = SOLUONG - " + d.getSoluong() +" where MASP = '" + d.getMASP()  + "' and MASIZE = '" + d.getMASIZE() +"'";             
 					
 			mySQL.executeUpdate(sql);
 			

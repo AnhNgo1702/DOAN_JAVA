@@ -7,20 +7,21 @@ import java.util.ArrayList;
 public class Hoadon_DTO {
     private String maHD,maNV;
     private String ngayHD;
-    private String thoigian;
+    private String Thoigian;
     private double  giamgia;
     private int maKH;
     private double tongTien;
     private ArrayList<ChitietHD_DTO> dsctHD;
 
-    public Hoadon_DTO(String maHD, String ngayHD, int maKH, String maNV,  double giamgia, double tongTien, String thoigian, ArrayList<ChitietHD_DTO> dsctHD) {
+    public Hoadon_DTO(String maHD, String ngayHD, String Thoigian, int maKH, String maNV,  double giamgia, double tongTien, ArrayList<ChitietHD_DTO> dsctHD) {
         this.maHD = maHD;
         this.maKH = maKH;
         this.maNV = maNV;
         this.ngayHD = ngayHD;
+        this.Thoigian = Thoigian;
         this.giamgia = giamgia;
         this.tongTien = tongTien;
-        this.Thoigian = Thoigian;
+
         this.dsctHD = dsctHD;
     }
 
@@ -81,6 +82,14 @@ public class Hoadon_DTO {
 
     public void setNgayHD(String ngayHD) {
         this.ngayHD = ngayHD;
+    }    
+
+    public String getThoigian() {
+        return Thoigian;
+    }
+
+    public void setThoigian(String thoigian) {
+        Thoigian = thoigian;
     }
 
     public void setGiamgia(int giamgia) {
@@ -89,14 +98,6 @@ public class Hoadon_DTO {
 
     public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
-    }
-
-    public String getThoigian() {
-        return Thoigian;
-    }
-
-    public void setThoigian(String thoigian) {
-        Thoigian = thoigian;
     }
     
 
